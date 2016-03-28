@@ -106,6 +106,7 @@ static CGFloat const chageImageTime = 2.0;
     return _timer;
 }
 - (void)timerAction{
+    if (_count<2) return;
     [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x +SCREEN_WIDTH, 0) animated:YES];
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{

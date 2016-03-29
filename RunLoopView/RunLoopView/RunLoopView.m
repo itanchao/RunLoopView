@@ -8,7 +8,7 @@
 
 #import "RunLoopView.h"
 #import "UIImageView+WebCache.h"
-#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define RUNLOOP_VIEW_SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
 static CGFloat const chageImageTime = 2.0;
 @interface RunLoopView ()<UIScrollViewDelegate>
 // 轮播器
@@ -39,12 +39,12 @@ static CGFloat const chageImageTime = 2.0;
             view.pagingEnabled=YES;
             view.delegate=self;
             view.showsHorizontalScrollIndicator=NO;
-            view.contentSize=CGSizeMake(SCREEN_WIDTH*3, 0);
+            view.contentSize=CGSizeMake(RUNLOOP_VIEW_SCREEN_WIDTH*3, 0);
             [self addSubview:view];
             view;
         });
         self.pageControl=({
-            UIPageControl *view = [[UIPageControl alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(frame)-30, SCREEN_WIDTH, 20)];
+            UIPageControl *view = [[UIPageControl alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(frame)-30, RUNLOOP_VIEW_SCREEN_WIDTH, 20)];
             view.currentPageIndicatorTintColor=[UIColor  redColor];
             [view addTarget:self action:@selector(pageAction) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:view];
@@ -61,7 +61,7 @@ static CGFloat const chageImageTime = 2.0;
 }
 #pragma mark 加载轮播器
 - (void)initImageViews{
-    CGFloat width=SCREEN_WIDTH;
+    CGFloat width=RUNLOOP_VIEW_SCREEN_WIDTH;
     CGFloat height=CGRectGetHeight(self.frame);
     self.leftView = ({
         UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,width, height)];
@@ -107,7 +107,7 @@ static CGFloat const chageImageTime = 2.0;
 }
 - (void)timerAction{
     if (_count<2) return;
-    [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x +SCREEN_WIDTH, 0) animated:YES];
+    [_scrollView setContentOffset:CGPointMake(_scrollView.contentOffset.x +RUNLOOP_VIEW_SCREEN_WIDTH, 0) animated:YES];
 }
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     [self stop];
@@ -120,7 +120,7 @@ static CGFloat const chageImageTime = 2.0;
     [self loadImageWithOffset:scrollView.contentOffset.x];
 }
 - (void)loadImageWithOffset:(CGFloat)offx{
-    if (offx>=SCREEN_WIDTH*2)
+    if (offx>=RUNLOOP_VIEW_SCREEN_WIDTH*2)
     {
         _currIndex++;
         if (_currIndex==_count-1)
@@ -163,9 +163,9 @@ static CGFloat const chageImageTime = 2.0;
     self.pageControl.numberOfPages=_count;
     
     if (_count<2) {
-        CGFloat width=SCREEN_WIDTH;
+        CGFloat width=RUNLOOP_VIEW_SCREEN_WIDTH;
         CGFloat height=CGRectGetHeight(self.frame);
-        [_scrollView setContentSize:CGSizeMake(SCREEN_WIDTH, 0)];
+        [_scrollView setContentSize:CGSizeMake(RUNLOOP_VIEW_SCREEN_WIDTH, 0)];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,width, height)];
         imageView.userInteractionEnabled=YES;
         [imageView sd_setImageWithURL:[NSURL URLWithString:imgUrls.firstObject] placeholderImage:nil];
@@ -189,7 +189,7 @@ static CGFloat const chageImageTime = 2.0;
     [_leftView sd_setImageWithURL:[NSURL URLWithString:item1] placeholderImage:nil];
     [_centerView sd_setImageWithURL:[NSURL URLWithString:item2] placeholderImage:nil];
     [_rightView sd_setImageWithURL:[NSURL URLWithString:item3] placeholderImage:nil];
-    [_scrollView setContentOffset:CGPointMake(SCREEN_WIDTH, 0)];
+    [_scrollView setContentOffset:CGPointMake(RUNLOOP_VIEW_SCREEN_WIDTH, 0)];
 }
 
 
